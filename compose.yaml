@@ -1,0 +1,42 @@
+services:
+  fastapi_postgres_redis_1:
+    image: postgres:15.0 # Or whichever version you prefer
+    container_name: fastapi_postgres_redis_1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: oluchi
+      POSTGRES_DB: mydb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:latest
+    container_name: redis_cache
+    networks:
+      - app-network
+    ports:
+      - "6379:6379"
+
+  app:
+    build: .
+    container_name: myapp
+    depends_on:
+      - fastapi_postgres_redis_1
+      - redis
+    networks:
+      - app-network
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgres://postgres:oluchi@fastapi_postgres_redis_1:5432/mydb
+      REDIS_URL: redis://redis_cache:6379
+
+volumes:
+  postgres_data:
+  
+networks:
+  app-network:
