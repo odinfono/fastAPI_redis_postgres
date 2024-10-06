@@ -26,8 +26,7 @@ pipeline {
                     . venv/bin/activate
                     pip install --upgrade pip
                     pip install -r requirements.txt
-                    pip install pytest  # Explicitly install pytest
-                    pip install pytest_asyncio
+                    pip install pytest httpx aiosqlite pytest-asyncio
                 '''
             }
         }
