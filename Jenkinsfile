@@ -27,6 +27,7 @@ pipeline {
                     pip install --upgrade pip
                     pip install -r requirements.txt
                     pip install pytest  # Explicitly install pytest
+                    pip install pytest_asyncio
                 '''
             }
         }
