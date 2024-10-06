@@ -7,6 +7,12 @@ pipeline {
     }
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()  // This will clean the workspace before the build starts
+            }
+        }
+        
         stage('Clone repository') {
             steps {
                 git 'https://github.com/odinfono/fastAPI_redis_postgres.git'
